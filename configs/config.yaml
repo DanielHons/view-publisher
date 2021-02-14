@@ -1,0 +1,4 @@
+conn: postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
+port: 3333
+publishers:
+  test: test
