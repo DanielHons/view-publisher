@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #header{
+            font-size: 120%;
+        }
+        #header tr td:nth-child(1){
+            font-weight: bold;
+        }
+
+        #report-table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #report-table td, #report-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #report-table tr:nth-child(even){background-color: #f2f2f2;}
+
+        #report-table tr:hover {background-color: #ddd;}
+
+        #report-table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4caf90;
+            color: white;
+        }
+        .sum{
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Timesheet</h1>
+<table id="header">
+    <tr><td>Name</td><td>Jon Doe</td></tr>
+    <tr><td>Project</td><td>MyFancyProject</td></tr>
+    <tr><td>Report creation</td><td>{{now}}</td></tr>
+</table>
+<table id = "report-table">
+    {{ $sumHours := 0.0 }}
+    <th>Date</th><th>Task</th><th>Category</th><th>Hours</th>
+    {{ range $_, $entry := $ }}
+        <tr>
+            {{ range $key, $val := $entry}}{{ if eq "date" $key }}<td>{{ $val }}</td> {{ end }}{{ end }}
+            {{ range $key, $val := $entry}}{{ if eq "task" $key }}<td>{{ $val }}</td> {{ end }}{{ end }}
+            {{ range $key, $val := $entry}}{{ if eq "category" $key }}<td>{{ $val }}</td> {{ end }}{{ end }}
+            {{ range $key, $val := $entry}}{{ if eq "hours" $key }}<td>{{ $val }}</td> {{ $sumHours = add $sumHours $val }} {{ end }}{{ end }}
+        </tr>
+    {{ end }}
+    <tr class="sum"><td></td><td>Summe</td><td></td><td>{{ $sumHours }}</td></tr>
+</table>
+</body>
+</html>
